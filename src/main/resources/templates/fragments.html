@@ -1,10 +1,26 @@
+<!--레이아웃을 사용할 때 xmlns 명시화-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<!--공통 머리말-->
+<!--fragment="조각명(변수명) 변수를 통해서 값을 받을 수 있다.-->
+<div th:fragment="header(title)" class="top-bar">
+    <!--/resources/static 자동으로 인식-->
+    <img alt="로고" th:src="@{/images/mlogo.png}" class="logo"
+         th:onclick="|location.href='@{/}'|"> <!--로고를 클릭했을 때-->
+    <!--이벤트로 맵핑처리시 location.href=주소-->
+    <h2 th:text="${title}"></h2>
+</div>
+<!--공통 꼬리말-->
+<div th:fragment="footer" class="footer-bar">
+    <img th:src="@{/images/mlogo.png}" class="footer-logo">
+    <span>Copyright @2024 Woori project</span>
+</div>
 
+</div>
 </body>
 </html>

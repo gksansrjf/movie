@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial - scale=1"> <!-- 반은형웹-->
+    <!-- 스타일시트 파일을 이용해서 모양꾸미기 -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!--스타일시트 효과는 jQuery 사용,jquery.com 사이트에서  CDN으로 주소지정-->
+    <!--mvnrepository.com에서 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body>
+<!-- 영화목록(레이아웃은 브라우저가 아닌 서버로 확인)-->
+<div class="wrap">
+    <!-- 현재페이지에 조각을 삽입해서 작성 insert-->
+    <th:block th:insert="~{fragments::header('영화정보 사이트')}"></th:block>
+    <div class="content"> <!--등록폼-->
+        <form th:action="@{/insert}" method="post" enctype="multipart/form-data">
+            <h2 class="form-header">영화 등록</h2>
+            <label >포스터</label>
+            <input type="file" name="file"> <!-- public String insert( MultipartFile file)-->
+            <!-- DTO의 변수명과 동일하게-->
+            <input type="text" class="write-input" name="name" placeholder="영화제목">
+            <input type="text" class="write-input" name="director" placeholder="감독">
+            <input type="text" class="write-input" name="nation" placeholder="국가">
+            <input type="text" class="write-input" name="genre" placeholder="장르">
+            <input type="text" class="write-input" name="actor" placeholder="주연배우">
+            <input type="date" class="write-input" name="open" placeholder="개봉일">
+            <textarea rows="5" class="write-input" name="synopsis" placeholder="영화 개요"></textarea>
+            <div class="btn-area">
+                <input type="submit" class="btn-write" value="S"> <!--저장-->
+                <input type="reset" class="btn-write" value="R"> <!--다시 시작-->
+                <input type="button" class="btn-write" onclick="history.back()" value="B"> <!--뒤로가기(ㅇㅣ전페이지)-->
+            </div>
+        </form>
+    </div>
+    <th:block th:insert="~{fragments::footer}"></th:block>
+
+</div>
+
+<!-- 작업처리 메세지-->
+
 
 </body>
 </html>

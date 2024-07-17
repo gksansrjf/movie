@@ -1,10 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial - scale=1"> <!-- 반은형웹-->
+    <!-- 스타일시트 파일을 이용해서 모양꾸미기 -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!--스타일시트 효과는 jQuery 사용,jquery.com 사이트에서  CDN으로 주소지정-->
+    <!--mvnrepository.com에서 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body>
+<!-- 영화목록(레이아웃은 브라우저가 아닌 서버로 확인)-->
+<div class="wrap">
+    <!-- 현재페이지에 조각을 삽입해서 작성 insert-->
+    <th:block th:insert="~{fragments::header('영화정보 사이트')}"></th:block>
+    <!--목록처리-->
+    <div class="content">
+        <!--제목-->
+        <div class="list-title">
+            <h2 class="form-header">영화 목록</h2>
+            <button class="wr-btn" th:onclick="|location.href='@{/insert}'|">영화등록</button>
+            <a class="wr-btn" th:href='@{/insert}'>영화등록</a>
+        </div>
+
+        <!--목록-->
+        <div class="data-area">
+            <!--isEmpty 비어있는가 ?  class="movie-item"-->
+            <th:block th:if="${#lists.isEmpty(list)}"> <!--목록데이터가 없으면 (조건이 맞으면 처리)-->
+                <div class>
+                    <span class="none-content">등록된 영화 정보가 없습니다.</span>
+                </div>
+            </th:block>
+            <th:block th:unless="${#lists.isEmpty(list)}" th:each="data:${list}">  <!--목록데이터가 있으면 (조건이 맞지않으면 처리)-->
+                <div class="movie-item"> <!--하나의 영화정보-->
+                    <a th:href="@{/detail(code=${data.code})}"> <!--포스터 이미지 처리-->
+                        <th:block th:if="${data.sysname}==null"> <!--포스터 이미자가 없을 떄-->
+                            <img class="poster-pre" th:src="@{/images/no_image.jpg}">
+                        </th:block>
+                        <th:block th:unless="${data.sysname}==null"> <!--포스터 이미지가 있을 떄-->
+                            <img class="poster-pre" th:src="@{'/upload/poster/'+${data.sysname}}">      <!--th:src="@{'/upload/poster/'+${data.sysname}}"-->
+                        </th:block>
+
+                    </a>
+                    <div class="info-pre"> <!--영화 정보-->
+                        <div class="title-pre">
+                            <a th:href="@{/detail(code=${data.code})}" th:text="${data.name}">영화제목</a>
+                        </div>
+                        <div class="content-pre" th:text="${data.director}">감독</div>
+                        <div class="content-pre" th:text="${data.open}">개봉일</div>
+                    </div>
+
+                </div>
+            </th:block>
+
+        </div>
+    </div>
+
+    <th:block th:insert="~{fragments::footer}"></th:block>
+
+</div>
+
+<!-- 작업처리 메세지-->
+
 
 </body>
 </html>

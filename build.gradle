@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    //springboot 2.x와 springboot 3.x 정확히 구분해서 설정
+    //추가적 기능
+    implementation'org.modelmapper:modelmapper:3.1.1'
+    //API설계(Swagger) -http://localhost:8080/swagger-ui/index.html
+    implementation('org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.2')
+    //레이아숫(화면을 불리해서 관리)
+    implementation'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+//Localhost(현재컴퓨터)-서버가 구축 - 내부작업  -집주소(ip=127.0.0.1)
+//|
+//| 연결(포워딩)-ngrok(가입) -구글,github->qr(2차인증) skip
+//| 로그인 -대시보드 -windows-다운로드
+//| ngrok.exe(포워딩 구동기), 웹페이지 인증키
+//| 1.서버 구동, 2.ngrok.exe 3.웹(configuration file)복사 콘솔에 붙여넣기
+//| 4.웹(Ephemeral domain) 복사 콘솔에 붙여넣기(포트번호는 변경)
+//| 5.콘솔에 forwarding 에 있는 -> 앞에주소 복사 붙여넣기
+//외부작업 - 도메인(http://www.woori.co.kr)
